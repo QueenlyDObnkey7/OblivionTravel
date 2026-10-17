@@ -13,7 +13,7 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Client restore failed.' }
     & dotnet build Client/OblivionTravel.Client.csproj -c Release "-p:ReadyMClientDir=$sdkPath" --no-restore --nologo
     if ($LASTEXITCODE -ne 0) { throw 'Client build failed.' }
-    & dotnet run --project Tests/OblivionTravel.Tests.csproj -c Release --nologo
+    & dotnet run --project Tests/OblivionTravel.Tests.csproj -c Release -- --sdk $sdkPath
     if ($LASTEXITCODE -ne 0) { throw 'Automated checks failed.' }
     & ./Audit-Source.ps1
     if ($Package) { & ./Package.ps1 }

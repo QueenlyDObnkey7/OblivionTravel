@@ -53,4 +53,5 @@ Check(controller.Tick(0, frame, c => c == "EnableFastTravel 1"), "explicit allow
 foreach (var invalidFrame in new[] { frame with { Pawn = 0 }, frame with { Area = "" }, frame with { Restored = false }, frame with { Alive = false } })
     Check(!controller.Tick(10, invalidFrame, _ => throw new Exception("Should not execute")), "unready frame defers without touching native state");
 
+if (args.Length == 2 && args[0] == "--sdk") SdkContracts.Check(args[1], Check);
 Console.WriteLine($"{count} automated checks passed. In-game/native/save persistence behavior is NOT tested by this runner.");

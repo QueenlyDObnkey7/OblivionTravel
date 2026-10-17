@@ -49,7 +49,7 @@ public sealed class TravelSystem(IPlayers players, ILogger logger) : ModSystemBa
             var frame = default(TravelFrame);
             if (players.LocalMainCharacter is { IsValid: true } player)
             {
-                var ready = host.Read();
+                var ready = host.Read(player);
                 frame = new TravelFrame(ready.Restored, player.Hp > 0, player.Pawn, ready.Area);
             }
             controller.Tick(now, frame, command =>

@@ -10,13 +10,13 @@ The default configuration submits `EnableFastTravel 0` after the default player 
 
 `Discovery: "PreserveNative"` preserves the map supplied by the default save/game. Existing visible and discovered destinations, including starting cities, stay as they are. Exploration continues using the game's native discovery behavior. The mod never hides markers, reveals all markers, changes per-marker travel flags, or creates its own approximation of discovery from player position. Fast-travel blocking does not require clearing discoveries.
 
-There is **no separate map persistence store** and no custom character identity. The mod neither reads nor writes save files, calls save/load APIs, replaces saves, intercepts save ownership, nor changes autosave/disconnect handling. It does not import Characters maps. Native/default persistence is left to the host and is **not established as sufficient in rc.1**: the inspected client default player save registry has no map-marker component. Cross-session discoveries may therefore fail to return even though this mod does not erase them. This requirement remains a release blocker, not an implemented persistence guarantee. No safe migration or full persistence adapter is shipped.
+There is **no separate map persistence store** and no custom character identity. The mod neither reads nor writes save files, calls save/load APIs, replaces saves, intercepts save ownership, nor changes autosave/disconnect handling. It does not import Characters maps. Native/default persistence is left to the host and is **not established as sufficient in rc.1**. A legacy client save registry still exists in the binary but is not exposed by the active DI container and cannot establish the current default save behavior. Cross-session discoveries may therefore fail to return even though this mod does not erase them. This requirement remains a release blocker, not an implemented persistence guarantee. No safe migration or full persistence adapter is shipped.
 
 ## Travel separation
 
 Only the two fixed `EnableFastTravel` commands can reach the native adapter. No position, rotation, respawn, resurrection, door, scripted teleport, or server travel handler is changed. The setting controls the native map-travel UI path; it is not a server anti-cheat boundary. Other mods can change the same global setting. Allow does not reveal destinations or bypass the game's other travel restrictions.
 
-Default save restoration is observed through a read-only rc.1 reflection adapter (`PlayerSaveCoordinator._restoreCompleted` and `CurrentAreaId`). Missing or changed contracts defer native commands and log warnings. This is a version-sensitive integration point. The mod never invokes the coordinator or changes its fields.
+Default save restoration is observed through a read-only rc.1 reflection adapter (`PlayerSaveStatusComponent.Applied` on the current local main character and `CurrentAreaId`). Missing or changed contracts defer native commands and log warnings. This is a version-sensitive integration point. The component is internal in rc.1; the adapter closes the public `EntityHandle.TryGetComponent<T>` read method over its inspected type. The mod never changes the component or invokes a save coordinator.
 
 ## Requirements and build
 
@@ -33,6 +33,8 @@ Run just the pure automated checks without game/SDK files:
 ```powershell
 dotnet run --project Tests/OblivionTravel.Tests.csproj -c Release
 ```
+
+This runs 27 policy/config checks. Build.ps1 also passes `--sdk` to the test runner, adding seven metadata-only checks of the actual rc.1 status/accessor/area contracts (34 checks total). No host code is loaded or executed by those metadata checks.
 
 `-Package` builds an allowlisted preview ZIP under `artifacts/`, including two mod DLLs, manifest, example-derived `config.json`, documentation and SHA-256 hashes. No SDK/game assets or private server configs are included. `Package.ps1` alone packages an already-built tree; use `Build.ps1 -Package` for a checked build.
 

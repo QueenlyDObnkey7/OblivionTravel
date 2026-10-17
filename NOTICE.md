@@ -1,6 +1,6 @@
 # Attribution and source provenance
 
-The source concept is the user's Oblivion Characters project, manifest author **QueenlyDonkey**. This standalone adaptation was requested by its owner. The fixed `EnableFastTravel` command strategy and narrow UE4SS console approach derive from inspection of `Client/MapClient.cs`, `Client/NativeScene.cs`, and `Client/UnrealBridge.cs`. OblivionTravel's configuration, scheduling, tests, and limited adapter were authored for this extraction. Original attribution is retained here; no third-party relicensing is asserted.
+The source concept is the user's Oblivion Characters project, manifest author **QueenlyDonkey**. This standalone adaptation was requested by its owner. The fixed `EnableFastTravel` command strategy and narrow UE4SS console approach derive from inspection of `Client/MapClient.cs`, `Client/NativeScene.cs`, and `Client/UnrealBridge.cs`. `HostSaveGuard.cs`/`HostComponents.cs` identify rc.1's internal Applied readiness signal; OblivionTravel reads it through the public EntityHandle generic accessor instead of copying their private-entity reflection or mutation helpers. OblivionTravel's configuration, scheduling, tests, and limited adapter were authored for this extraction. Original attribution is retained here; no third-party relicensing is asserted.
 
 Inspected source roots (read-only during this work):
 
