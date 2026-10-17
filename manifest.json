@@ -1,0 +1,8 @@
+{
+  "uniqueId": "OblivionTravel",
+  "version": "0.1.0",
+  "name": "Oblivion Travel (preview)",
+  "author": "QueenlyDonkey",
+  "description": "Standalone map fast-travel control preserving native map visibility and default save ownership. Discovery persistence requires runtime validation.",
+  "dependencies": [{ "uniqueId": "OblivionMP.SDK", "minimumVersion": "1.0.0" }]
+}

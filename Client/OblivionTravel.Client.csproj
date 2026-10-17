@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ReadyMClientDir Condition="'$(ReadyMClientDir)' == ''">$(APPDATA)/ReadyM.Launcher/Oblivion/Mods/OblivionMp/dlls</ReadyMClientDir>
+    <NoWarn>$(NoWarn);CS0618</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Core/OblivionTravel.Core.csproj" />
+    <Reference Include="OblivionMp.Sdk"><HintPath>$(ReadyMClientDir)/OblivionMp.Sdk.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="OblivionMp.Sdk.Common"><HintPath>$(ReadyMClientDir)/OblivionMp.Sdk.Common.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="ReadyM.Api"><HintPath>$(ReadyMClientDir)/ReadyM.Api.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="ReadyM.Modloader"><HintPath>$(ReadyMClientDir)/ReadyM.Modloader.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="ReadyM.Sdk.Common"><HintPath>$(ReadyMClientDir)/ReadyM.Sdk.Common.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="ReadyM.SDK"><HintPath>$(ReadyMClientDir)/ReadyM.SDK.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="ReadyM.SDK.Client"><HintPath>$(ReadyMClientDir)/ReadyM.SDK.Client.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="ReadyM.Relay.Common.Oblivion"><HintPath>$(ReadyMClientDir)/ReadyM.Relay.Common.Oblivion.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Yooni.Native.Container"><HintPath>$(ReadyMClientDir)/Yooni.Native.Container.dll</HintPath><Private>false</Private></Reference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.8" ExcludeAssets="runtime" />
+  </ItemGroup>
+  <Target Name="CheckSdk" BeforeTargets="ResolveReferences">
+    <Error Condition="!Exists('$(ReadyMClientDir)/OblivionMp.Sdk.dll')" Text="Set ReadyMClientDir to the rc.1 client SDK DLL directory. SDK binaries are not distributed." />
+  </Target>
+</Project>

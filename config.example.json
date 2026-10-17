@@ -1,0 +1,7 @@
+{
+  "Enabled": true,
+  "MapFastTravel": "Block",
+  "Discovery": "PreserveNative",
+  "ReapplySeconds": 60,
+  "ReadyDelaySeconds": 2
+}
